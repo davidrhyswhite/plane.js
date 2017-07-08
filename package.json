@@ -1,0 +1,33 @@
+{
+  "name": "plane.js",
+  "version": "0.0.0",
+  "description": "A simple, functional compile to JS syntax.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --recursive",
+    "test:watch": "npm t -- --watch",
+    "posttest": "npm run lint",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/davidrhyswhite/plain.git"
+  },
+  "author": "David Rhys White <david.rhys.white@icloud.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidrhyswhite/plain/issues"
+  },
+  "homepage": "https://github.com/davidrhyswhite/plain#readme",
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "eslint": "^4.1.1",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "mocha": "^3.4.2",
+    "sinon": "^2.3.6"
+  },
+  "engines": {
+    "node": ">=8.1.0"
+  }
+}
