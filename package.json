@@ -4,7 +4,7 @@
   "description": "A simple, functional compile to JS syntax.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --recursive",
+    "test": "mocha --reporter landing --recursive",
     "test:watch": "npm t -- --watch",
     "posttest": "npm run lint",
     "lint": "eslint ."
