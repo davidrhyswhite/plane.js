@@ -5,20 +5,21 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter landing --recursive",
+    "test:integration": "",
     "test:watch": "npm t -- --watch",
     "posttest": "npm run lint",
     "lint": "eslint ."
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/davidrhyswhite/plain.git"
+    "url": "git+ssh://git@github.com/davidrhyswhite/plane.js.git"
   },
   "author": "David Rhys White <david.rhys.white@icloud.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/davidrhyswhite/plain/issues"
+    "url": "https://github.com/davidrhyswhite/plane.js/issues"
   },
-  "homepage": "https://github.com/davidrhyswhite/plain#readme",
+  "homepage": "https://github.com/davidrhyswhite/plane.js#readme",
   "devDependencies": {
     "chai": "^4.0.2",
     "eslint": "^4.1.1",
