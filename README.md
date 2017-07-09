@@ -4,6 +4,15 @@
 
 A simple, functional compile to JS syntax.
 
+### TODO
+
+* Block scoping;
+* Pattern matching;
+* `()()` closure syntax;
+* Removing `fn` keyword for function definitions;
+* Unix piping `|` for nested calls;
+* Type checking;
+
 ## Installation
 
     npm install -g plane.js
