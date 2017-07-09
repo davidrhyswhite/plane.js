@@ -9,13 +9,16 @@ const {
   isWhitespace
 } = require('../../src/lexer/matchers');
 
-const KEYWORDS = ['if', 'then', 'else', 'fn', 'true', 'false'];
+const {
+  KEYWORDS,
+  OPERATORS,
+  PUNCTUATIONS,
+  WHITESPACE,
+  IDENTIFIERS,
+  NON_STARTING_IDENTIFIERS
+} = require('../../src/constants');
+
 const DIGITS = [1, 2, 3, 10, 11, 44.3];
-const OPERATORS = ['+', '-', '*', '/', '%', '=', '&', '|', '<', '>', '!'];
-const PUNCTUATIONS = ['', ',', ';', '(', ')', '{', '}', '[', ']', ''];
-const WHITESPACE = [' ', '\t', '\n'];
-const IDENTIFIERS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-const NON_STARTING_IDENTIFIERS = ['?', '!', '-', '<', '>', '=', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 describe('Lexer', () => {
   describe('-> matchers', () => {

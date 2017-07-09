@@ -28,6 +28,10 @@
     "mocha": "^3.4.2",
     "sinon": "^2.3.6"
   },
+  "bin": {
+    "spine": "./bin/plane"
+  },
+  "preferGlobal": true,
   "engines": {
     "node": ">=8.1.0"
   }

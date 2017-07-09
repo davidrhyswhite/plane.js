@@ -1,8 +1,14 @@
-const KEYWORDS = [' ', 'if', 'then', 'else', 'fn', 'true', 'false', ' '].join(' ');
-
+const {
+  KEYWORDS,
+  NON_STARTING_IDENTIFIERS,
+  OPERATORS,
+  PUNCTUATIONS,
+  WHITESPACE
+} = require('../constants');
 
 function isKeyword(x) {
-  return KEYWORDS.indexOf(` ${x} `) >= 0;
+  const keywords = ` ${KEYWORDS.join(' ')} `;
+  return keywords.indexOf(` ${x} `) >= 0;
 }
 
 function isDigit(character) {
@@ -14,19 +20,19 @@ function isIDStart(character) {
 }
 
 function isID(character) {
-  return isIDStart(character) || '?!-<>=0123456789'.indexOf(character) >= 0;
+  return isIDStart(character) || NON_STARTING_IDENTIFIERS.join('').indexOf(character) >= 0;
 }
 
 function isOpChar(character) {
-  return '+-*/%=&|<>!'.indexOf(character) >= 0;
+  return OPERATORS.join('').indexOf(character) >= 0;
 }
 
 function isPunc(character) {
-  return ',;(){}[]'.indexOf(character) >= 0;
+  return PUNCTUATIONS.join('').indexOf(character) >= 0;
 }
 
 function isWhitespace(character) {
-  return ' \t\n'.indexOf(character) >= 0;
+  return WHITESPACE.join('').indexOf(character) >= 0;
 }
 
 module.exports = {

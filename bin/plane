@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+const argv = process.argv.slice(2);
+const fs = require('fs');
+const fd = require('path');
+const pkg = require('../package');
+
+const { run } = require('../index');
+
+const help = `
+  Usage: plane [options]
+
+  Compiles and builds a plane.js script with the specified command-line options (${pkg.version})
+
+  options:
+    run script    Processes a plane script
+    repl          Loads a repl for plane.js scripts
+    help          The help you are reading right now
+`;
+
+const commands = {
+  run() {
+    const script = argv[1];
+    run(script);
+  },
+  repl() {
+    require('../src/repl');
+  },
+  help() {
+    console.log(help);
+  }
+};
+
+if (commands[argv[0]]) {
+  commands[argv[0]]();
+} else {
+  console.log(help);
+}

@@ -8,6 +8,14 @@ A simple, functional compile to JS syntax.
 
 ## Usage
 
+Once installed you will have access to the `plane` compiler on your command line:
+
+    plane run
+
+### REPL
+
+Plane.js has a small REPL to test and try scripts in. 
+
 ## Testing
 
 ### Unit
