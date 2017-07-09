@@ -3,6 +3,12 @@
   "version": "0.1.1",
   "description": "A simple, functional compile to JS syntax.",
   "main": "index.js",
+  "keywords": [
+    "javascript",
+    "language",
+    "compiler",
+    "transpiler"
+  ],
   "scripts": {
     "test": "mocha --reporter landing --recursive",
     "test:integration": "mocha test/integration --reporter landing",
