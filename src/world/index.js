@@ -31,16 +31,16 @@ class World {
     if (name in this.constants) {
       return this.constants[name];
     }
-    throw new Error(`Undefined constant: ${name}`);
+    throw new Error(`Undefined constant: "${name}"`);
   }
 
   set(name, value) {
     const scope = this.lookup(name);
     if (!scope && this.parent) {
-      throw new Error(`Undefined constant ${name}`);
+      throw new Error(`Undefined constant: "${name}"`);
     }
     if ((scope || this).constants[name]) {
-      throw new Error(`Attempting to reassign constant ${name}`);
+      throw new Error(`Attempting to reassign constant: "${name}"`);
     }
     (scope || this).constants[name] = value;
     return scope;

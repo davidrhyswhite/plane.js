@@ -39,4 +39,17 @@ describe('constant assignment', () => {
 
     expect(typeof world.constants.func).to.equal('function');
   });
+
+  it.skip('assigns constants to a scope', () => {
+    const script = `
+      func = fn (stringConst) {
+        scopedConst = stringConst;
+      };
+    `;
+    const world = new World();
+
+    run(script, world);
+
+    expect(world.constants.func()).to.equal('function');
+  });
 });
