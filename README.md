@@ -1,5 +1,7 @@
 # ✈ Plane.js
 
+![Travis CI Build](https://travis-ci.org/davidrhyswhite/plane.js.svg?branch=master)
+
 A simple, functional compile to JS syntax.
 
 ## Installation
