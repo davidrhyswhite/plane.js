@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter landing --recursive",
-    "test:integration": "",
+    "test:integration": "mocha test/integration --reporter landing",
     "test:watch": "npm t -- --watch",
     "posttest": "npm run lint",
     "lint": "eslint ."

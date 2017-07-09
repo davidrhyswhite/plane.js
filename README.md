@@ -10,11 +10,13 @@ A simple, functional compile to JS syntax.
 
 Once installed you will have access to the `plane` compiler on your command line:
 
-    plane run
+    plane run 'negate = fn(value, func) { !func(value) };'
 
 ### REPL
 
-Plane.js has a small REPL to test and try scripts in. 
+Plane.js has a small REPL to test and try scripts in:
+
+    plane repl
 
 ## Testing
 

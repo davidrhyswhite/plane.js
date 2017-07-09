@@ -65,9 +65,10 @@ function readEscaped(input, end) {
 }
 
 function readString(input) {
+  const value = readEscaped(input, '"');
   return {
     type: 'str',
-    value: readEscaped(input, '"')
+    value
   };
 }
 
