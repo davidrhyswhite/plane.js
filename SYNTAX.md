@@ -4,6 +4,8 @@
 
 All assignments are final in plane.js, there is no concept of variables, only constants hence the ability to drop any `var`, `let` or `const` statements. Once `Object` and `Array`s are introduced they will be frozen upon creation.
 
+Strings in plane.js are simply declared with only the `"` double quote syntax, this was chosen over a `'` single quote as it aligns more closely with the JSON specification.
+
 ```javascript
 numbers = 42;
 booleans = true;

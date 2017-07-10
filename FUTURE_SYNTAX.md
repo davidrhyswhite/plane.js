@@ -24,7 +24,16 @@ const array = Object.freeze([1, 2, 3]);
 
 Frozen objects and arrays allow us to create fully un-mutable data types within JavaScript.
 
-### Conditionals
+### String interpolation
+
+Template strings were a great addition in ES6, but they co course require the additional syntactic sugar of a "\`" back tick character. Plane.js will simplify this allowing interpolation within standard strings, this should negate the need to use the `+` operator to concatenate strings:
+
+```javascript
+name = "David";
+greeting = "Hello ${name}";
+```
+
+### Unless conditional
 
 Plane.js proposes an `unless` statement, this can make for very readable code when the conditional condition follows the expression. Look at the following ES6 code, which should be easily transpilable from an `unless` statement.
 
@@ -73,6 +82,7 @@ const negate = function (func) {
   };
 };
 ```
+
 Since `(){}` denotes a function declaration, we can safely assume that we will assign a constant named negate a function that takes a single argument to match the preceding JavaScript.
 
 ```javascript
@@ -89,4 +99,20 @@ We can take this syntax a step further and safely assume `()(){}` is a function 
 negate (func)(x) {
   !func(x);
 };
+```
+
+### Piping
+
+Piping is useful when composing many small functions with and input -> output, leaving a readable chain where your source code processes in the same order as your code, take the following JavaScript assignment expression:
+
+```javascript
+const myNumber = Math.round(Math.sqrt(Math.PI));
+```
+
+If we read this as our code is written it would be 'call math round then call math square then pass in PI', which is not the order of execution which would be more like 'Take PI, call math square then round that'. Unix has long provided a piping mechanism to achieve that and the newer Elixir programming language provides the `|>` pipe right operator which is very readable.
+
+Plain.js hopes to allow you to write the preceding example as:
+
+```javascript
+myNumber = Math.PI |> Math.sqrt |> Math.round;
 ```
