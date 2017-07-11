@@ -6,12 +6,17 @@ A simple, functional compile to JS syntax.
 
 ### TODO
 
-* Block scoping;
-* Pattern matching;
-* `()()` closure syntax;
-* Removing `fn` keyword for function definitions;
-* Unix piping `|` for nested calls;
-* Type checking;
+##### For v1.0.0
+
+- [ ] Block scoping;
+- [ ] Pattern matching;
+- [ ] `()(){}` partially applied closure syntax;
+- [ ] Removing `fn` keyword for function definitions;
+- [x] Unix style piping `|` for nested calls, implemented as `|>`;
+
+##### Beyond
+
+- [ ] Type checking;
 
 ## Installation
 
@@ -48,6 +53,10 @@ Integration test are important for any new feature added or removed to ensure co
 ESLint is running across the project for a consistent style:
 
     npm run lint
+
+## Why another syntax?
+
+The intentions of plane.js are to remove many of the constructs of JavaScript and start from scratch with a smaller, cleaner more functional approach. My initial aim was to learn more about lexers and parsers and how programming languages are written in general so I can more easily contribute to the discussions around the future of ECMAScript and understand the difficulties faced (by the TC39 team) adding new constructs / ideas to such a project.
 
 ## Contributing
 
