@@ -29,6 +29,9 @@ function applyOperator(operator, left, right) {
     case '%': {
       return num(left) % div(right);
     }
+    case '**': {
+      return num(left) ** num(right);
+    }
     case '&&': {
       return left !== false && right;
     }
