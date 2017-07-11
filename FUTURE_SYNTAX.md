@@ -100,19 +100,3 @@ negate (func)(x) {
   !func(x);
 };
 ```
-
-### Piping
-
-Piping is useful when composing many small functions with and input -> output, leaving a readable chain where your source code processes in the same order as your code, take the following JavaScript assignment expression:
-
-```javascript
-const myNumber = Math.round(Math.sqrt(Math.PI));
-```
-
-If we read this as our code is written it would be 'call math round then call math square then pass in PI', which is not the order of execution which would be more like 'Take PI, call math square then round that'. Unix has long provided a piping mechanism to achieve that and the newer Elixir programming language provides the `|>` pipe right operator which is very readable.
-
-Plain.js hopes to allow you to write the preceding example as:
-
-```javascript
-myNumber = Math.PI |> Math.sqrt |> Math.round;
-```
