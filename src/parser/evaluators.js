@@ -56,6 +56,9 @@ function applyOperator(operator, left, right) {
     case '!=': {
       return left !== right;
     }
+    case '|>': {
+      return right(left);
+    }
     default: {
       throw new Error(`Unable to process operator ${operator}`);
     }

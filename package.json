@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "test": "mocha --reporter landing --recursive",
+    "test:debug": "mocha --recursive",
     "test:integration": "mocha test/integration --reporter landing",
     "test:watch": "npm t -- --watch",
     "posttest": "npm run lint",
