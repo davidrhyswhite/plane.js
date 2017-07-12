@@ -2,7 +2,11 @@
 
 ![Travis CI Build](https://travis-ci.org/davidrhyswhite/plane.js.svg?branch=master)
 
-A simple, functional compile to JS syntax.
+A simple, functional compiles to JavaScript syntax.
+
+### Overview
+
+Plane.js uses only a small number of keywords from JavaScript, namely `if`, `else`, `true` and `false`, strings are represented with a double quote `"` only and numbers work as expected. It's introduced the `fn` keyword for function definitions but this will be removed soon in favour of matching functions based on their `(){}` signature.
 
 ### TODO
 
@@ -12,10 +16,15 @@ A simple, functional compile to JS syntax.
 - [ ] Pattern matching;
 - [ ] `()(){}` partially applied closure syntax;
 - [ ] Removing `fn` keyword for function definitions;
+- [ ] Last expression explicitly returned by default from functions;
 - [x] Unix style piping `|` for nested calls, implemented as `|>`;
+- [ ] String interpolation;
 
 ##### Beyond
 
+- [ ] Ability to use the (.) operator;
+- [ ] Array literals using the `[];` declaration;
+- [ ] Object literals using the `{};` declaration;
 - [ ] Type checking;
 
 ## Installation
@@ -54,9 +63,15 @@ ESLint is running across the project for a consistent style:
 
     npm run lint
 
-## Why another syntax?
+## Why...
+
+### Another syntax?
 
 The intentions of plane.js are to remove many of the constructs of JavaScript and start from scratch with a smaller, cleaner more functional approach. My initial aim was to learn more about lexers and parsers and how programming languages are written in general so I can more easily contribute to the discussions around the future of ECMAScript and understand the difficulties faced (by the TC39 team) adding new constructs / ideas to such a project.
+
+### Plane?
+
+Well the NPM registry is pretty full of decent names these days and I wanted a name signifying that it's a plain / simple almost like syntactically version of JavaScript. As plain.js was taken, I opted for the homonym version of that word.
 
 ## Contributing
 
