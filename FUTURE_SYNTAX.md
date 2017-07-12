@@ -71,6 +71,8 @@ someCode() unless (numberIsTen);
 
 ### Functions
 
+##### Partial application
+
 The hope of plane.js is to remove many of the JavaScript keywords and instead provide simple, structures to create object, arrays and functions. This means removing the current `fn: Function` keyword in favour of a `(){}` data type.
 
 Many times in JavaScript we like to return a partially applied inner closure, more common within functional programming, plane.js proposes that all function expressions return the last value within that expression, but also proposes a new `()()` closure syntax. Given the following compile JS, it would be good to rewrite that as:
@@ -98,5 +100,50 @@ We can take this syntax a step further and safely assume `()(){}` is a function 
 ```javascript
 negate (func)(x) {
   !func(x);
+};
+```
+
+##### Explicit return
+
+One aim of plain.js is to have functions explicitly return the value of the last expression evaluated. This is a win over having to explicitly return values from functions and promotes the usage of pure functions.
+
+```javascript
+isFirstSixOfFibonacci (x) {
+  fibonacci = [0, 1, 2, 3, 5, 8];
+  fibonacci.indexOf(x) > -1;
+};
+```
+
+The preceding will compile to return a `Boolean` from the method `isFirstSixOfFibonacci`, for example:
+
+```javascript
+const isFirstSixOfFibonacci = function (x) {
+  const fibonacci = [0, 1, 2, 3, 5, 8];
+  return (fibonacci.indexOf(x) > -1);
+};
+```
+
+Functions where the last statement is a conditional will in turn return the last expression within the `true` conditional. If we re-wrote our function with conditionals:
+
+```javascript
+isFirstSixOfFibonacci (x) {
+  const fibonacci = [0, 1, 2, 3, 5, 8];
+  if (fibonacci.indexOf(x) > -1) {
+    "Is one of the first 6 digits!";
+  } else {
+    "Is not one of the first 6 digits";
+  };
+};
+```
+
+The preceding code will in turn compile to:
+
+```javascript
+const isFirstSixOfFibonacci = function (x) {
+  const fibonacci = [0, 1, 2, 3, 5, 8];
+  if (fibonacci.indexOf(x) > -1) {
+    return "Is one of the first 6 digits!";
+  }
+  return "Is not one of the first 6 digits";
 };
 ```
