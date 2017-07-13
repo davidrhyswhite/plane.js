@@ -1,13 +1,13 @@
 /* eslint no-use-before-define: ["error", { "functions": false }] */
 
-const {
+import {
   isPunc,
   isKeyword,
   isOperator,
   skipPunc,
   skipKeyword,
   unexpected
-} = require('./matchers');
+} from './matchers';
 
 const PRECEDENCE = {
   '=': 1,
@@ -33,7 +33,7 @@ const FALSE = {
   value: false
 };
 
-function delimited(input, start, stop, separator, parser) {
+export function delimited(input, start, stop, separator, parser) {
   const a = [];
   let first = true;
   skipPunc(input, start);
@@ -55,7 +55,7 @@ function delimited(input, start, stop, separator, parser) {
   return a;
 }
 
-function parseConstName(input) {
+export function parseConstName(input) {
   const name = input.next();
   if (name.type !== 'const') {
     input.fail('Expecting constant name');
@@ -63,7 +63,7 @@ function parseConstName(input) {
   return name.value;
 }
 
-function parseCall(input, func) {
+export function parseCall(input, func) {
   const args = delimited(input, '(', ')', ',', parseExpression);
   return {
     type: 'call',
@@ -72,7 +72,7 @@ function parseCall(input, func) {
   };
 }
 
-function parseBool(input) {
+export function parseBool(input) {
   const value = (input.next().value === 'true');
   return {
     type: 'bool',
@@ -80,12 +80,12 @@ function parseBool(input) {
   };
 }
 
-function maybeCall(input, expression) {
+export function maybeCall(input, expression) {
   const exp = expression();
   return isPunc(input, '(') ? parseCall(input, exp) : exp;
 }
 
-function parseLambda(input) {
+export function parseLambda(input) {
   const constants = delimited(input, '(', ')', ',', parseConstName);
   const body = parseExpression(input);
   return {
@@ -95,7 +95,7 @@ function parseLambda(input) {
   };
 }
 
-function parseIf(input) {
+export function parseIf(input) {
   skipKeyword(input, 'if');
   const condition = parseExpression(input);
   const then = parseExpression(input);
@@ -113,7 +113,7 @@ function parseIf(input) {
   return conditional;
 }
 
-function parseProg(input) {
+export function parseProg(input) {
   const prog = delimited(input, '{', '}', ';', parseExpression);
   if (prog.length === 0) {
     return FALSE;
@@ -127,7 +127,7 @@ function parseProg(input) {
   };
 }
 
-function parseAtom(input, fn) {
+export function parseAtom(input, fn) {
   return fn(input, () => {
     if (isPunc(input, '(')) {
       input.next();
@@ -156,7 +156,7 @@ function parseAtom(input, fn) {
   });
 }
 
-function maybeBinary(input, left, precedence) {
+export function maybeBinary(input, left, precedence) {
   const token = isOperator(input);
   if (token) {
     const newPrecedence = PRECEDENCE[token.value];
@@ -175,7 +175,7 @@ function maybeBinary(input, left, precedence) {
   return left;
 }
 
-function makeTopLevel(input, currentLines) {
+export function makeTopLevel(input, currentLines) {
   if (input.eof()) {
     return currentLines;
   }
@@ -185,22 +185,6 @@ function makeTopLevel(input, currentLines) {
   return makeTopLevel(input, newLines);
 }
 
-function parseExpression(input) {
+export function parseExpression(input) {
   return maybeCall(input, () => maybeBinary(input, parseAtom(input, maybeCall), 0));
 }
-
-
-module.exports = {
-  maybeBinary,
-  parseAtom,
-  maybeCall,
-  parseExpression,
-  delimited,
-  parseCall,
-  parseConstName,
-  parseIf,
-  parseLambda,
-  parseBool,
-  makeTopLevel,
-  parseProg
-};

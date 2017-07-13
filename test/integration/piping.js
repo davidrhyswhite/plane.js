@@ -1,9 +1,9 @@
-const { expect } = require('chai');
-const streamer = require('../../src/streamer');
-const tokenizer = require('../../src/lexer');
-const parser = require('../../src/parser');
-const World = require('../../src/world');
-const { evaluate } = require('../../src/parser/evaluators');
+import { expect } from 'chai';
+import streamer from '../../src/streamer';
+import tokenizer from '../../src/lexer/index';
+import parser from '../../src/parser/index';
+import World from '../../src/world/index';
+import { evaluate } from '../../src/parser/evaluators';
 
 const run = (script, world) => {
   const stream = streamer(script);

@@ -51,12 +51,6 @@ The unit tests are easily runnable with:
 
     npm test
 
-### Integration
-
-Integration test are important for any new feature added or removed to ensure compatibility and test a feature fully through to compilation and running, the can be run individually with:
-
-    npm run test:integration
-
 ### Linting
 
 ESLint is running across the project for a consistent style:

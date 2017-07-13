@@ -1,4 +1,4 @@
-const {
+import {
   isKeyword,
   isDigit,
   isIDStart,
@@ -6,9 +6,9 @@ const {
   isOpChar,
   isPunc,
   isWhitespace
-} = require('./matchers');
+} from './matchers';
 
-function readWhile(input, predicate, str = '') {
+export function readWhile(input, predicate, str = '') {
   if (!input.eof() && predicate(input.peek())) {
     const concatenated = str + input.next();
     return readWhile(input, predicate, concatenated);
@@ -16,7 +16,7 @@ function readWhile(input, predicate, str = '') {
   return str;
 }
 
-function readNumber(input) {
+export function readNumber(input) {
   let hasDot = false;
   const number = readWhile(input, (character) => {
     if (character === '.') {
@@ -34,7 +34,7 @@ function readNumber(input) {
   };
 }
 
-function readIdent(input) {
+export function readIdent(input) {
   const id = readWhile(input, isID);
   const type = isKeyword(id) ? 'keyword' : 'const';
   return {
@@ -43,7 +43,7 @@ function readIdent(input) {
   };
 }
 
-function readEscaped(input, end) {
+export function readEscaped(input, end) {
   let escaped = false;
   let str = '';
   input.next();
@@ -64,7 +64,7 @@ function readEscaped(input, end) {
   return str;
 }
 
-function readString(input) {
+export function readString(input) {
   const value = readEscaped(input, '"');
   return {
     type: 'str',
@@ -72,12 +72,12 @@ function readString(input) {
   };
 }
 
-function skipComment(input) {
+export function skipComment(input) {
   readWhile(input, character => character !== '\n');
   input.next();
 }
 
-function readNext(input) {
+export function readNext(input) {
   readWhile(input, isWhitespace);
   if (input.eof()) {
     return null;
@@ -117,13 +117,3 @@ function readNext(input) {
 
   return input.fail(`Unable to process character: ${character}`);
 }
-
-module.exports = {
-  readWhile,
-  readNumber,
-  readIdent,
-  readEscaped,
-  readString,
-  skipComment,
-  readNext
-};

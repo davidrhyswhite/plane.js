@@ -1,6 +1,6 @@
-const { readNext } = require('./readers');
+import { readNext } from './readers';
 
-function lexer(input) {
+export default function lexer(input) {
   let current = null;
 
   function peek() {
@@ -24,5 +24,3 @@ function lexer(input) {
     fail: input.fail
   };
 }
-
-module.exports = lexer;

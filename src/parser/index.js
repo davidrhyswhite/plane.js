@@ -1,12 +1,10 @@
-const makers = require('./makers');
+import { makeTopLevel } from './makers';
 
-function parse(input) {
-  const prog = makers.makeTopLevel(input, []);
+export default function parse(input) {
+  const prog = makeTopLevel(input, []);
 
   return {
     type: 'prog',
     prog
   };
 }
-
-module.exports = parse;

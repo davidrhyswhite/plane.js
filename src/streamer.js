@@ -1,4 +1,4 @@
-const streamer = (input) => {
+export default function (input) {
   let position = 0;
   let line = 1;
   let column = 0;
@@ -29,6 +29,4 @@ const streamer = (input) => {
     eof,
     fail
   };
-};
-
-module.exports = streamer;
+}

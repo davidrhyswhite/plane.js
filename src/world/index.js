@@ -1,4 +1,4 @@
-const standardLib = require('./standard-lib');
+import standardLib from './standard-lib';
 
 function checkScope(scope, name) {
   if (Object.prototype.hasOwnProperty.call(scope.constants, name)) {
@@ -11,7 +11,7 @@ function checkScope(scope, name) {
   return false;
 }
 
-class World {
+export default class World {
   constructor(parent) {
     this.constants = Object.create(parent ? parent.constants : null);
     this.parent = parent;
@@ -51,5 +51,3 @@ class World {
     return this.constants;
   }
 }
-
-module.exports = World;

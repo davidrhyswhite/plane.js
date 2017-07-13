@@ -1,5 +1,5 @@
 
-function isPunc(input, character) {
+export function isPunc(input, character) {
   const token = input.peek();
   if (token && token.type === 'punc' && (!character || token.value === character)) {
     return token;
@@ -7,7 +7,7 @@ function isPunc(input, character) {
   return false;
 }
 
-function isKeyword(input, keyword) {
+export function isKeyword(input, keyword) {
   const token = input.peek();
   if (token && token.type === 'keyword' && (!keyword || token.value === keyword)) {
     return token;
@@ -15,7 +15,7 @@ function isKeyword(input, keyword) {
   return false;
 }
 
-function isOperator(input, operator) {
+export function isOperator(input, operator) {
   const token = input.peek();
   if (token && token.type === 'op' && (!operator || token.value === operator)) {
     return token;
@@ -23,7 +23,7 @@ function isOperator(input, operator) {
   return false;
 }
 
-function skipPunc(input, character) {
+export function skipPunc(input, character) {
   if (isPunc(input, character)) {
     input.next();
   } else {
@@ -31,7 +31,7 @@ function skipPunc(input, character) {
   }
 }
 
-function skipKeyword(input, keyword) {
+export function skipKeyword(input, keyword) {
   if (isKeyword(input, keyword)) {
     input.next();
   } else {
@@ -39,7 +39,7 @@ function skipKeyword(input, keyword) {
   }
 }
 
-function skipOperator(input, operator) {
+export function skipOperator(input, operator) {
   if (isOperator(input, operator)) {
     input.next();
   } else {
@@ -47,16 +47,6 @@ function skipOperator(input, operator) {
   }
 }
 
-function unexpected(input) {
+export function unexpected(input) {
   input.fail(`Unexpected token: ${JSON.stringify(input.peek())}`);
 }
-
-module.exports = {
-  isPunc,
-  isKeyword,
-  isOperator,
-  skipPunc,
-  skipKeyword,
-  skipOperator,
-  unexpected
-};

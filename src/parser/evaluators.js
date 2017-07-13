@@ -12,7 +12,7 @@ const div = (x) => {
   return x;
 };
 
-function applyOperator(operator, left, right) {
+export function applyOperator(operator, left, right) {
   switch (operator) {
     case '+': {
       return num(left) + num(right);
@@ -65,7 +65,7 @@ function applyOperator(operator, left, right) {
   }
 }
 
-function makeFunction(env, expression, evaluateFn) {
+export function makeFunction(env, expression, evaluateFn) {
   const names = expression.constants;
   const scope = env.extend();
 
@@ -81,7 +81,7 @@ function makeFunction(env, expression, evaluateFn) {
   };
 }
 
-function evaluate(expression, world) {
+export function evaluate(expression, world) {
   switch (expression.type) {
     case 'num':
     case 'str':
@@ -128,9 +128,3 @@ function evaluate(expression, world) {
     }
   }
 }
-
-module.exports = {
-  applyOperator,
-  makeFunction,
-  evaluate
-};

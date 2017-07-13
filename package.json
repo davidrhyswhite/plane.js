@@ -2,7 +2,8 @@
   "name": "plane.js",
   "version": "0.2.0",
   "description": "A simple, functional compile to JS syntax.",
-  "main": "index.js",
+  "main": "dist/plane.js",
+  "module": "dist/plane.es.js",
   "keywords": [
     "javascript",
     "language",
@@ -10,12 +11,15 @@
     "transpiler"
   ],
   "scripts": {
-    "test": "mocha --reporter landing --recursive",
-    "test:debug": "mocha --recursive",
-    "test:integration": "mocha test/integration --reporter landing",
-    "test:watch": "npm t -- --watch",
+    "pretest": "rollup -c build/rollup.tests.js",
+    "test": "mocha dist/plane.tests.js",
+    "test:debug": "mocha dist/plane.tests.js",
+    "test:watch": "nodemon --watch src --watch test --exec 'npm test'",
     "posttest": "npm run lint",
-    "lint": "eslint ."
+    "build": "rollup -c build/rollup.js",
+    "postbuild": "babili dist/plane.es.js -o dist/plane.es.min.js && babili dist/plane.js -o dist/plane.min.js",
+    "lint": "eslint .",
+    "prepublish": "npm run build && npm test -- --reporter landing"
   },
   "repository": {
     "type": "git",
@@ -28,11 +32,15 @@
   },
   "homepage": "https://github.com/davidrhyswhite/plane.js#readme",
   "devDependencies": {
+    "babili": "^0.1.4",
     "chai": "^4.0.2",
     "eslint": "^4.1.1",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.7.0",
     "mocha": "^3.4.2",
+    "nodemon": "^1.11.0",
+    "rollup": "^0.45.1",
+    "rollup-plugin-multi-entry": "^2.0.1",
     "sinon": "^2.3.6"
   },
   "bin": {
@@ -40,6 +48,6 @@
   },
   "preferGlobal": true,
   "engines": {
-    "node": ">=8.1.0"
+    "node": ">=7.9.0"
   }
 }

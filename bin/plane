@@ -3,8 +3,7 @@ const argv = process.argv.slice(2);
 const fs = require('fs');
 const fd = require('path');
 const pkg = require('../package');
-
-const { run } = require('../index');
+const run = require('../dist/plane');
 
 const help = `
   Usage: plane [options]
@@ -23,7 +22,7 @@ const commands = {
     run(script);
   },
   repl() {
-    require('../src/repl');
+    require('../src/repl')(run);
   },
   help() {
     console.log(help);

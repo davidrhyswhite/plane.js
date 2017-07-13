@@ -1,5 +1,5 @@
-const { expect } = require('chai');
-const streamer = require('../src/streamer');
+import { expect } from 'chai';
+import streamer from '../src/streamer';
 
 describe('streamer', () => {
   describe('.peek()', () => {

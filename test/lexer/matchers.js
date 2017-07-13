@@ -1,5 +1,5 @@
-const { expect } = require('chai');
-const {
+import { expect } from 'chai';
+import {
   isKeyword,
   isDigit,
   isIDStart,
@@ -7,16 +7,16 @@ const {
   isOpChar,
   isPunc,
   isWhitespace
-} = require('../../src/lexer/matchers');
+} from '../../src/lexer/matchers';
 
-const {
+import {
   KEYWORDS,
   OPERATORS,
   PUNCTUATIONS,
   WHITESPACE,
   IDENTIFIERS,
   NON_STARTING_IDENTIFIERS
-} = require('../../src/constants');
+} from '../../src/constants';
 
 const DIGITS = [1, 2, 3, 10, 11, 44.3];
 
