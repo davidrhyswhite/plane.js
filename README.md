@@ -2,7 +2,7 @@
 
 ![Travis CI Build](https://travis-ci.org/davidrhyswhite/plane.js.svg?branch=master)
 
-A simple, functional compiles to JavaScript syntax.
+A simple, functional, compiles to JavaScript syntax.
 
 ### Overview
 
@@ -13,29 +13,47 @@ Plane.js uses only a small number of keywords from JavaScript, namely `if`, `els
 ##### For v1.0.0
 
 - [ ] Block scoping;
-- [ ] Pattern matching;
 - [ ] `()(){}` partially applied closure syntax;
 - [ ] Removing `fn` keyword for function definitions;
 - [ ] Last expression explicitly returned by default from functions;
 - [x] Unix style piping `|` for nested calls, implemented as `|>`;
 - [ ] String interpolation;
+- [ ] Ability to use the (.) operator;
 
 ##### Beyond
 
-- [ ] Ability to use the (.) operator;
+- [ ] `import`, `export` syntax;
+- [ ] Pattern matching;
 - [ ] Array literals using the `[];` declaration;
 - [ ] Object literals using the `{};` declaration;
+- [ ] `as` keyword for ` import * as named`;
+- [ ] `Object` and `Array` left assignment destructuring;
+- [ ] Enhanced destructuring with the unary rest operator `...`;
 - [ ] Type checking;
 
 ## Installation
 
     npm install -g plane.js
 
+Plain.js exports two versions, the `dist/plain.js` which
+
 ## Usage
 
-Once installed you will have access to the `plane` compiler on your command line:
+Once installed you will have access to the `plane` CLI:
 
     plane run 'negate = fn(value, func) { !func(value) };'
+
+### Node.js / AMD
+
+The Node.js or AMD version is built into the `dist/plain.js`, this exports a single function, when you require this file in with either Node.js or an AMD based environment. Since this is compiled in a UMD format it "should" work as a script within the browser giving you a `plane` function attached to the window object.
+
+* Note you will still need a modern browser with this option as there is no additional transpiling happening.
+
+### Modern browsers
+
+If you're running a modern browser then it makes sense to use the `dist/plain.es.js` version, similarly this exports a single function to pass your script in to be interpreted and run.
+
+Both the `plain.js` and `plain.es.js` versions are distributed with minified
 
 ### REPL
 
