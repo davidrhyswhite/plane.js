@@ -12,7 +12,7 @@ Plane.js uses only a small number of keywords from JavaScript, namely `if`, `els
 
 ##### For v1.0.0
 
-- [ ] Block scoping;
+- [x] Block scoping;
 - [ ] `()(){}` partially applied closure syntax;
 - [ ] Removing `fn` keyword for function definitions;
 - [ ] Last expression explicitly returned by default from functions;
