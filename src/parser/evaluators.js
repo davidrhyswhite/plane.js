@@ -67,17 +67,17 @@ export function applyOperator(operator, left, right) {
 
 export function makeFunction(env, expression, evaluateFn) {
   const names = expression.constants;
-  const scope = env.extend();
+  const kepler = env.extend();
 
   return function fn(...args) {
     let i = 0;
 
     names.forEach((name) => {
-      scope.def(name, (i < args.length) ? args[i] : false);
+      kepler.set(name, (i < args.length) ? args[i] : false);
       i += 1;
     });
 
-    return evaluateFn(expression.body, scope);
+    return evaluateFn(expression.body, kepler);
   };
 }
 

@@ -42,7 +42,7 @@ const OPERATORS = ['+', '-', '*', '/', '%', '=', '&', '|', '<', '>', '!'];
 const PUNCTUATIONS = ['', ',', ';', '(', ')', '{', '}', '[', ']', ''];
 const WHITESPACE = [' ', '\t', '\n'];
 
-const NON_STARTING_IDENTIFIERS = ['?', '!', '-', '<', '>', '=', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+const NON_STARTING_IDENTIFIERS = ['?', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 function isKeyword(x) {
   const keywords = ` ${KEYWORDS.join(' ')} `;
@@ -272,7 +272,7 @@ const PRECEDENCE = {
   '*': 20,
   '/': 20,
   '%': 20,
-  '**': 20
+  '**': 30
 };
 
 const FALSE = {
@@ -436,8 +436,8 @@ function parseExpression(input) {
   return maybeCall(input, () => maybeBinary(input, parseAtom(input, maybeCall), 0));
 }
 
-function parse(input) {
-  const prog = makeTopLevel(input, []);
+function parse(input, makeTopLevelFunc = makeTopLevel) {
+  const prog = makeTopLevelFunc(input, []);
 
   return {
     type: 'prog',
@@ -447,7 +447,7 @@ function parse(input) {
 
 var standardLib = function (world) {
   // eslint-disable-next-line no-console
-  world.def('log', val => console.log(val));
+  world.set('log', val => console.log(val));
 };
 
 function checkScope(scope, name) {
@@ -463,13 +463,14 @@ function checkScope(scope, name) {
 
 class World {
   constructor(parent) {
-    this.constants = Object.create(parent ? parent.constants : null);
+    this.constants = Object.create(null);
     this.parent = parent;
     standardLib(this);
   }
 
   extend() {
-    return new World(this);
+    const kepler = new World(this);
+    return kepler;
   }
 
   lookup(name) {
@@ -478,27 +479,19 @@ class World {
   }
 
   get(name) {
-    if (name in this.constants) {
-      return this.constants[name];
+    const scope = this.lookup(name);
+    if (scope !== false) {
+      return scope.constants[name];
     }
     throw new Error(`Undefined constant: "${name}"`);
   }
 
   set(name, value) {
-    const scope = this.lookup(name);
-    if (!scope && this.parent) {
-      throw new Error(`Undefined constant: "${name}"`);
-    }
-    if ((scope || this).constants[name]) {
+    if (this.constants[name]) {
       throw new Error(`Attempting to reassign constant: "${name}"`);
     }
-    (scope || this).constants[name] = value;
-    return scope;
-  }
-
-  def(name, value) {
     this.constants[name] = value;
-    return this.constants;
+    return this;
   }
 }
 
@@ -571,17 +564,17 @@ function applyOperator(operator, left, right) {
 
 function makeFunction(env, expression, evaluateFn) {
   const names = expression.constants;
-  const scope = env.extend();
+  const kepler = env.extend();
 
   return function fn(...args) {
     let i = 0;
 
     names.forEach((name) => {
-      scope.def(name, (i < args.length) ? args[i] : false);
+      kepler.set(name, (i < args.length) ? args[i] : false);
       i += 1;
     });
 
-    return evaluateFn(expression.body, scope);
+    return evaluateFn(expression.body, kepler);
   };
 }
 

@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import parse from '../../src/parser/index';
-import * as makers from '../../src/parser/makers';
 
 const sandbox = sinon.sandbox.create();
 
@@ -12,17 +11,17 @@ describe('Parser', () => {
   });
 
   describe('.parse()', () => {
-    it.skip('calls .makeTopLevel and returns the AST', () => {
+    it('calls .makeTopLevel and returns the AST', () => {
       const expectedAST = {
         type: 'prog',
         prog: []
       };
+      const makeTopLevel = sandbox.stub().returns([]);
       const input = sandbox.spy();
-      sandbox.stub(makers, 'makeTopLevel').returns([]);
 
-      const ast = parse(input);
+      const ast = parse(input, makeTopLevel);
 
-      expect(makers.makeTopLevel.calledWith(input, [])).to.be.true;
+      expect(makeTopLevel.calledWith(input, [])).to.be.true;
       expect(ast).to.deep.equal(expectedAST);
     });
   });

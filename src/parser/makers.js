@@ -25,7 +25,7 @@ const PRECEDENCE = {
   '*': 20,
   '/': 20,
   '%': 20,
-  '**': 20
+  '**': 30
 };
 
 const FALSE = {

@@ -13,7 +13,6 @@
   "scripts": {
     "pretest": "rollup -c build/rollup.tests.js",
     "test": "mocha dist/plane.tests.js",
-    "test:debug": "mocha dist/plane.tests.js",
     "test:watch": "nodemon --watch src --watch test --exec 'npm test'",
     "posttest": "npm run lint",
     "build": "rollup -c build/rollup.js",

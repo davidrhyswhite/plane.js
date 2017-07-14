@@ -13,13 +13,14 @@ function checkScope(scope, name) {
 
 export default class World {
   constructor(parent) {
-    this.constants = Object.create(parent ? parent.constants : null);
+    this.constants = Object.create(null);
     this.parent = parent;
     standardLib(this);
   }
 
   extend() {
-    return new World(this);
+    const kepler = new World(this);
+    return kepler;
   }
 
   lookup(name) {
@@ -28,26 +29,18 @@ export default class World {
   }
 
   get(name) {
-    if (name in this.constants) {
-      return this.constants[name];
+    const scope = this.lookup(name);
+    if (scope !== false) {
+      return scope.constants[name];
     }
     throw new Error(`Undefined constant: "${name}"`);
   }
 
   set(name, value) {
-    const scope = this.lookup(name);
-    if (!scope && this.parent) {
-      throw new Error(`Undefined constant: "${name}"`);
-    }
-    if ((scope || this).constants[name]) {
+    if (this.constants[name]) {
       throw new Error(`Attempting to reassign constant: "${name}"`);
     }
-    (scope || this).constants[name] = value;
-    return scope;
-  }
-
-  def(name, value) {
     this.constants[name] = value;
-    return this.constants;
+    return this;
   }
 }
