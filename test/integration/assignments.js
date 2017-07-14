@@ -3,7 +3,7 @@ import streamer from '../../src/streamer';
 import tokenizer from '../../src/lexer/index';
 import parser from '../../src/parser/index';
 import TestWorld from '../test-world';
-import { evaluate } from '../../src/parser/evaluators';
+import { evaluate } from '../../src/evaluators';
 
 const run = (script) => {
   const stream = streamer(script);

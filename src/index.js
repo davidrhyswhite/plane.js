@@ -2,7 +2,7 @@ import streamer from './streamer';
 import tokenizer from './lexer/index';
 import parser from './parser/index';
 import World from './world/index';
-import { evaluate } from './parser/evaluators';
+import { evaluate } from './evaluators';
 
 const world = new World();
 
