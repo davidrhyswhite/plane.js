@@ -29,7 +29,7 @@ const PRECEDENCE = {
 };
 
 const FALSE = {
-  type: 'bool',
+  type: 'Boolean',
   value: false
 };
 
@@ -57,7 +57,8 @@ export function delimited(input, start, stop, separator, parser) {
 
 export function parseConstName(input) {
   const name = input.next();
-  if (name.type !== 'const') {
+  console.log(name);
+  if (name.type !== 'VariableDeclarator') {
     input.fail('Expecting constant name');
   }
   return name.value;
@@ -66,7 +67,7 @@ export function parseConstName(input) {
 export function parseCall(input, func) {
   const args = delimited(input, '(', ')', ',', parseExpression);
   return {
-    type: 'call',
+    type: 'CallExpression',
     func,
     args
   };
@@ -75,7 +76,7 @@ export function parseCall(input, func) {
 export function parseBool(input) {
   const value = (input.next().value === 'true');
   return {
-    type: 'bool',
+    type: 'Boolean',
     value
   };
 }
@@ -85,11 +86,11 @@ export function maybeCall(input, expression) {
   return isPunc(input, '(') ? parseCall(input, exp) : exp;
 }
 
-export function parseLambda(input) {
+export function parseFunction(input) {
   const constants = delimited(input, '(', ')', ',', parseConstName);
   const body = parseExpression(input);
   return {
-    type: 'fn',
+    type: 'FunctionExpression',
     constants,
     body
   };
@@ -114,16 +115,16 @@ export function parseIf(input) {
 }
 
 export function parseProg(input) {
-  const prog = delimited(input, '{', '}', ';', parseExpression);
-  if (prog.length === 0) {
+  const body = delimited(input, '{', '}', ';', parseExpression);
+  if (body.length === 0) {
     return FALSE;
   }
-  if (prog.length === 1) {
-    return prog[0];
+  if (body.length === 1) {
+    return body[0];
   }
   return {
-    type: 'prog',
-    prog
+    type: 'Program',
+    body
   };
 }
 
@@ -146,7 +147,7 @@ export function parseAtom(input, fn) {
     }
     if (isKeyword(input, 'fn')) {
       input.next();
-      return parseLambda(input);
+      return parseFunction(input);
     }
     const token = input.next();
     if (token.type === 'const' || token.type === 'num' || token.type === 'str') {
@@ -162,7 +163,7 @@ export function maybeBinary(input, left, precedence) {
     const newPrecedence = PRECEDENCE[token.value];
     if (newPrecedence > precedence) {
       input.next();
-      const type = token.value === '=' ? 'assign' : 'binary';
+      const type = token.value === '=' ? 'VariableDeclaration' : 'BinaryExpression';
       const right = maybeBinary(input, parseAtom(input, maybeCall), newPrecedence);
       return maybeBinary(input, {
         type,

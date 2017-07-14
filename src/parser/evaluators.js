@@ -83,26 +83,27 @@ export function makeFunction(env, expression, evaluateFn) {
 
 export function evaluate(expression, world) {
   switch (expression.type) {
-    case 'num':
-    case 'str':
-    case 'bool': {
+    case 'Number':
+    case 'String':
+    case 'Boolean': {
       return expression.value;
     }
-    case 'const': {
+      case 'VariableDeclarator': {
+      console.log(expression);
       return world.get(expression.value);
     }
-    case 'assign': {
+    case 'VariableDeclaration': {
       if (expression.left.type !== 'const') {
         throw new Error(`Cannot assign to ${JSON.stringify(expression.left)}`);
       }
       return world.set(expression.left.value, evaluate(expression.right, world));
     }
-    case 'binary': {
+    case 'BinaryExpression': {
       const left = evaluate(expression.left, world);
       const right = evaluate(expression.right, world);
       return applyOperator(expression.operator, left, right);
     }
-    case 'fn': {
+    case 'FunctionExpression': {
       return makeFunction(world, expression, evaluate);
     }
     case 'if': {
@@ -112,14 +113,14 @@ export function evaluate(expression, world) {
       }
       return expression.else ? evaluate(expression.else, world) : false;
     }
-    case 'prog': {
+    case 'Program': {
       let val = false;
-      expression.prog.forEach((exp) => {
+      expression.body.forEach((exp) => {
         val = evaluate(exp, world);
       });
       return val;
     }
-    case 'call': {
+    case 'CallExpression': {
       const func = evaluate(expression.func, world);
       return func(...expression.args.map(arg => evaluate(arg, world)));
     }

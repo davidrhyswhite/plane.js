@@ -13,8 +13,8 @@ describe('Parser', () => {
   describe('.parse()', () => {
     it('calls .makeTopLevel and returns the AST', () => {
       const expectedAST = {
-        type: 'prog',
-        prog: []
+        type: 'Program',
+        body: []
       };
       const makeTopLevel = sandbox.stub().returns([]);
       const input = sandbox.spy();

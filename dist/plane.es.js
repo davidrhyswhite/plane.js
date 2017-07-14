@@ -36,7 +36,7 @@ const OPERATORS = ['+', '-', '*', '/', '%', '=', '&', '|', '<', '>', '!'];
 const PUNCTUATIONS = ['', ',', ';', '(', ')', '{', '}', '[', ']', ''];
 const WHITESPACE = [' ', '\t', '\n'];
 
-const NON_STARTING_IDENTIFIERS = ['?', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+const NON_STARTING_IDENTIFIERS = ['?', '!', '-', '<', '>', '=', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 function isKeyword(x) {
   const keywords = ` ${KEYWORDS.join(' ')} `;

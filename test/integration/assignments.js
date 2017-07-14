@@ -11,20 +11,22 @@ const run = (script) => {
   const ast = parser(tokenized);
   const world = new TestWorld(undefined, true);
 
+  console.log(JSON.stringify(ast));
   evaluate(ast, world);
 
   return { stream, tokenized, ast };
 };
 
 describe('constant assignment', () => {
-  it('assigns constants of strings, numbers and booleans', () => {
+  it.only('assigns constants of strings, numbers and booleans', () => {
     const script = `
       stringConst = "stringConst";
       numberConst = 10;
       booleanConst = true;
     `;
 
-    run(script);
+    const application = run(script);
+    console.log(application);
     const [programWorld] = global.plane.worlds;
 
     expect(programWorld.constants.stringConst).to.equal('stringConst');

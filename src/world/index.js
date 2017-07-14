@@ -30,6 +30,7 @@ export default class World {
 
   get(name) {
     const scope = this.lookup(name);
+    console.log(name);
     if (scope !== false) {
       return scope.constants[name];
     }
