@@ -15,6 +15,11 @@ export default function (input) {
     return character;
   };
 
+  const lookAhead = () => {
+    const character = input.charAt(position + 1);
+    return character;
+  };
+
   const peek = () => input.charAt(position);
 
   const eof = () => (peek() === '');
@@ -25,6 +30,7 @@ export default function (input) {
 
   return {
     next,
+    lookAhead,
     peek,
     eof,
     fail

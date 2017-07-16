@@ -81,6 +81,11 @@ export function makeFunction(env, expression, evaluateFn) {
   };
 }
 
+export function makeTemplateString(expression, world) {
+  const string = expression.quasis[0].value + evaluate(expression.expressions[0], world) + expression.quasis[1].value;
+  return string;
+}
+
 export function evaluate(expression, world) {
   switch (expression.type) {
     case 'num':
@@ -101,6 +106,9 @@ export function evaluate(expression, world) {
       const left = evaluate(expression.left, world);
       const right = evaluate(expression.right, world);
       return applyOperator(expression.operator, left, right);
+    }
+    case 'string-template': {
+      return makeTemplateString(expression, world);
     }
     case 'fn': {
       return makeFunction(world, expression, evaluate);

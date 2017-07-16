@@ -1,7 +1,7 @@
 import standardLib from './standard-lib';
 
 function checkScope(scope, name) {
-  if (Object.prototype.hasOwnProperty.call(scope.constants, name)) {
+  if (name in scope.constants) {
     return scope;
   }
   if (typeof scope.parent !== 'undefined') {
