@@ -102,6 +102,10 @@ export function evaluate(expression, world) {
       const right = evaluate(expression.right, world);
       return applyOperator(expression.operator, left, right);
     }
+    case 'string-template': {
+      const string = expression.quasis[0] + expression.expressions[0] + expression.quasis[1];
+      return string;
+    }
     case 'fn': {
       return makeFunction(world, expression, evaluate);
     }

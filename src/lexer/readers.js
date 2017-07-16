@@ -49,7 +49,16 @@ export function readEscaped(input, end) {
   input.next();
 
   while (!input.eof()) {
+    const isTemplateExpression = (input.peek() === '$' && input.lookAhead() === '{');
     const character = input.next();
+    if (isTemplateExpression) {
+      input.next();
+      const id = readWhile(input, isID);
+      return {
+        ids: [id],
+        strings: [str, readEscaped(input, '"')]
+      };
+    }
     if (escaped) {
       str += character;
       escaped = false;
@@ -66,8 +75,10 @@ export function readEscaped(input, end) {
 
 export function readString(input) {
   const value = readEscaped(input, '"');
+  const type = (typeof value === 'string') ? 'str' : 'template';
+
   return {
-    type: 'str',
+    type,
     value
   };
 }

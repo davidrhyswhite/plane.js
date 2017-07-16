@@ -127,6 +127,16 @@ export function parseProg(input) {
   };
 }
 
+export function parseTemplate(input) {
+  const { ids: expressions, strings: quasis } = input.value;
+
+  return {
+    type: 'string-template',
+    expressions,
+    quasis
+  };
+}
+
 export function parseAtom(input, fn) {
   return fn(input, () => {
     if (isPunc(input, '(')) {
@@ -149,6 +159,9 @@ export function parseAtom(input, fn) {
       return parseLambda(input);
     }
     const token = input.next();
+    if (token.type === 'template') {
+      return parseTemplate(token);
+    }
     if (token.type === 'const' || token.type === 'num' || token.type === 'str') {
       return token;
     }
