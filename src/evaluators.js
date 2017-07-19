@@ -81,9 +81,11 @@ export function makeFunction(env, expression, evaluateFn) {
   };
 }
 
-export function makeTemplateString(expression, world) {
-  const string = expression.quasis[0].value + evaluate(expression.expressions[0], world) + expression.quasis[1].value;
-  return string;
+export function makeTemplateString(world, expressions, quasis, evaluateFn) {
+  return quasis.map((string, index) => {
+    const evaluated = (typeof expressions[index] === 'undefined') ? '' : evaluateFn(expressions[index], world);
+    return string.value + evaluated;
+  }).join('');
 }
 
 export function evaluate(expression, world) {
@@ -108,7 +110,8 @@ export function evaluate(expression, world) {
       return applyOperator(expression.operator, left, right);
     }
     case 'string-template': {
-      return makeTemplateString(expression, world);
+      const { expressions, quasis } = expression;
+      return makeTemplateString(world, expressions, quasis, evaluate);
     }
     case 'fn': {
       return makeFunction(world, expression, evaluate);

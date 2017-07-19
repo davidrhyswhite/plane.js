@@ -11,6 +11,7 @@ import {
 export function readWhile(input, predicate, str = '') {
   if (!input.eof() && predicate(input.peek())) {
     const concatenated = str + input.next();
+
     return readWhile(input, predicate, concatenated);
   }
   return str;
@@ -28,6 +29,7 @@ export function readNumber(input) {
     }
     return isDigit(character);
   });
+
   return {
     type: 'num',
     value: parseFloat(number)
@@ -37,40 +39,51 @@ export function readNumber(input) {
 export function readIdent(input) {
   const id = readWhile(input, isID);
   const type = isKeyword(id) ? 'keyword' : 'const';
+
   return {
     type,
     value: id
   };
 }
 
-export function readEscaped(input, end) {
+const isTemplateExpression = input => (input.peek() === '$' && input.lookAhead() === '{');
+
+export function readEscaped(input, end, string = '', expressions = [], quasis = []) {
   let escaped = false;
-  let str = '';
   input.next();
 
   while (!input.eof()) {
-    const isTemplateExpression = (input.peek() === '$' && input.lookAhead() === '{');
     const character = input.next();
-    if (isTemplateExpression) {
+    if (isTemplateExpression(input)) {
+      quasis.push({ type: 'str', value: string + character });
       input.next();
-      const id = readWhile(input, isID);
-      return {
-        ids: [id],
-        strings: [str, readEscaped(input, '"')]
-      };
+      input.next();
+      const id = readIdent(input);
+      expressions.push(id);
+
+      return readEscaped(input, '"', '', expressions, quasis);
     }
     if (escaped) {
-      str += character;
+      // eslint-disable-next-line no-param-reassign
+      string += character;
       escaped = false;
     } else if (character === '\\') {
       escaped = true;
     } else if (character === end) {
       break;
     } else {
-      str += character;
+      // eslint-disable-next-line no-param-reassign
+      string += character;
     }
   }
-  return str;
+  if (expressions.length > 0 || quasis.length > 0) {
+    quasis.push({ type: 'str', value: string });
+    return {
+      expressions,
+      quasis
+    };
+  }
+  return string;
 }
 
 export function readString(input) {

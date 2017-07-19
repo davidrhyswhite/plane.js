@@ -128,19 +128,7 @@ export function parseProg(input) {
 }
 
 export function parseTemplate(input) {
-  const { ids, strings } = input.value;
-  const expressions = ids.map((value) => {
-    return {
-      type: 'const',
-      value
-    };
-  });
-  const quasis = strings.map((value) => {
-    return {
-      type: 'str',
-      value
-    }
-  });
+  const { expressions, quasis } = input.value;
 
   return {
     type: 'string-template',

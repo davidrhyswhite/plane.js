@@ -16,12 +16,10 @@ const run = (script, world) => {
 };
 
 describe('String interpolation', () => {
-  it.only('interpolates like a boss!', () => {
+  it('interpolates a single constant into the string', () => {
     // eslint-disable-next-line no-template-curly-in-string
     const script = 'name = "David";message = "Welcome ${name}!";log(message);';
-
     const world = new World();
-
     const application = run(script, world);
 
     const expectedAST = {
@@ -29,29 +27,62 @@ describe('String interpolation', () => {
       expressions: [
         {
           type: 'const',
-          value: 'name',
-          range: [11, 15]
+          value: 'name'
         }
       ],
       quasis: [
         {
           type: 'str',
-          value: 'Welcome ',
-          range: [0, 11]
+          value: 'Welcome '
         },
         {
           type: 'str',
-          value: '!',
-          range: [15, 18]
+          value: '!'
         }
       ]
     };
 
     const templateAST = application.ast.prog[1].right;
-    console.log(JSON.stringify(templateAST, null, 2));
-
-
-
     expect(templateAST).to.deep.equal(expectedAST);
   });
+
+  it('interpolates a multiple constants into the string', () => {
+    // eslint-disable-next-line no-template-curly-in-string
+    const script = 'name = "David";nickname = "Davey";message = "Welcome ${name}! How is ${nickname} today?";log(message);';
+    const world = new World();
+    const application = run(script, world);
+
+    const expectedAST = {
+      type: 'string-template',
+      expressions: [
+        {
+          type: 'const',
+          value: 'name'
+        },
+        {
+          type: 'const',
+          value: 'nickname'
+        }
+      ],
+      quasis: [
+        {
+          type: 'str',
+          value: 'Welcome '
+        },
+        {
+          type: 'str',
+          value: '! How is '
+        },
+        {
+          type: 'str',
+          value: ' today?'
+        }
+      ]
+    };
+
+    const templateAST = application.ast.prog[2].right;
+    expect(templateAST).to.deep.equal(expectedAST);
+  });
+  it('interpolates expressions into the string');
+  it('interpolates calls into the string');
 });
