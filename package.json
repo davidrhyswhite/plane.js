@@ -1,6 +1,6 @@
 {
   "name": "plane.js",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A simple, functional compile to JS syntax.",
   "main": "dist/plane.js",
   "module": "dist/plane.es.js",

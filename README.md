@@ -16,7 +16,7 @@ Plane.js uses only a small number of keywords from JavaScript, namely `if`, `els
 - [ ] `()(){}` partially applied closure syntax;
 - [ ] Removing `fn` keyword for function definitions;
 - [x] Unix style piping `|` for nested calls, implemented as `|>`;
-- [ ] String interpolation;
+- [x] String interpolation;
 - [ ] Ability to use the (.) operator;
 - [ ] Update parser to produce a valid [ESTree Spec](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API)
 
