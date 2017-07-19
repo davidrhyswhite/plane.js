@@ -64,6 +64,110 @@ Plane.js has a small REPL to test and try scripts in:
 
 The REPL is a very, very simple extension to the Node.js `node` environment, so you can still use the handy `.exit`, `.editor`, `.clear`, `.save` and `.load` commands. A
 
+## Syntax
+
+### Assignments
+
+All assignments are final in plane.js, there is no concept of variables, only constants hence the ability to drop any `var`, `let` or `const` statements. Once `Object` and `Array`s are introduced they will be frozen upon creation.
+
+Strings in plane.js are simply declared with only the `"` double quote syntax, this was chosen over a `'` single quote as it aligns more closely with the JSON specification.
+
+```javascript
+numbers = 42;
+booleans = true;
+strings = "Strings are only double quoted, no single quotes.";
+```
+
+The preceding would be compiled into the following ES6 code:
+
+```javascript
+const numbers = 42;
+const booleans = true;
+const strings = "Strings are only double quoted, no single quotes.";
+```
+
+### Operators
+
+The following operators work almost the same as their JavaScript counterparts, with the exception that they only work on values of type `Number`. This means you're unable to concatenate two strings together using the `+` addition operator. Instead with strings you can use interpolation, see below.
+
+| Plane.js      | Type           |
+| ------------- | -------------- |
+| +             | Assignment     |
+| -             | Subtraction    |
+| *             | Multiplication |
+| /             | Division       |
+| **            | Exponential    |
+
+### Strings
+
+Strings in Plane.js can only be created with double quotes, single quotes `'` and back-ticks \` are not supported and will cause a syntax error.
+
+```javascript
+name = "David";
+nickname = "Dave";
+log("Hi ${name}, may I call you ${nickname}?");
+```
+
+### Conditionals
+
+In the following example the equality operator `==` will be compiled to `===`.
+
+##### Equality operators
+
+Plane.js has less equality operators that JavaScript, opting for the strict equality of `===` and `!==`.
+
+| Plane.js      | JavaScript    |
+| ------------- | ------------- |
+| <             | <             |
+| >             | >             |
+| <=            | <=            |
+| >=            | >=            |
+| ==            | ===           |
+| !=            | !==           |
+
+```javascript
+number = 10;
+if (number == 10) {
+  log("Number is 10!");
+} else {
+  log("Number is not 10... ¯\_(ツ)_/¯");
+};
+```
+
+### Functions
+
+Plane.js has no formal function declaration such as `function cube(x) {}` that we have in JavaScript, instead a function is assigned to a constant.
+
+```javascript
+cube = fn(x) {
+  x * x * x
+};
+```
+
+The preceding would be compiled to the following ES6 code:
+
+```javascript
+const cube = function (x) {
+  return x * x * x;
+};
+```
+
+### Piping
+
+Piping is useful when composing many small functions with and input -> output, leaving a readable chain where your source code processes in the same order as your code, take the following JavaScript assignment expression:
+
+```javascript
+const myNumber = Math.round(Math.sqrt(Math.PI));
+```
+
+If we read this as our code is written it would be 'call math round then call math square then pass in PI', which is not the order of execution which would be more like 'Take PI, call math square then round that'. Unix has long provided a piping mechanism to achieve that and the newer Elixir programming language provides the `|>` pipe right operator which is very readable.
+
+Plain.js hopes to allow you to write the preceding example as:
+
+```javascript
+myNumber = Math.PI |> Math.sqrt |> Math.round;
+```
+
 ## Testing
 
 ### Unit
